@@ -1,0 +1,19 @@
+.notes-section {
+  margin-top: 15px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.notes-section textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.notes-hint {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
+}

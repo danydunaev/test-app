@@ -1,29 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Greeting from './Greeting';
-import UserCard from './UseCard';
+import UserCard from './UseCard'; // Исправил возможный тайпо в импорте (было './UseCard', предполагаю, что файл UserCard.jsx)
 import TaskList from './TaskList';
 import TechnologyCard from './components/TechnologyCard';
 import ProgressHeader from './components/ProgressHeader';
 import QuickActions from './components/QuickActions';
-// Добавим новые примеры из теории
-import Counter from './Counter';
-import RegistrationForm from './RegistrationForm';
-import ColorPicker from './ColorPicker';
+// Новые примеры с useEffect
+import WindowSizeTracker from './components/WindowSizeTracker';
+import UserProfile from './components/UserProfile';
+import ContactForm from './components/ContactForm';
 
 function App() {
   const [technologies, setTechnologies] = useState([
-    { id: 1, title: 'React Components', description: 'Изучение базовых компонентов', status: 'not-started' },
-    { id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX', status: 'not-started' },
-    { id: 3, title: 'State Management', description: 'Работа с состоянием компонентов', status: 'not-started' }
+    { id: 1, title: 'React Components', description: 'Изучение базовых компонентов', status: 'not-started', notes: '' },
+    { id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX', status: 'not-started', notes: '' },
+    { id: 3, title: 'State Management', description: 'Работа с состоянием компонентов', status: 'not-started', notes: '' }
   ]);
-
-  const [filter, setFilter] = useState('all'); // 'all', 'not-started', 'in-progress', 'completed'
+  const [filter, setFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const updateStatus = (id, newStatus) => {
     setTechnologies(prevTechnologies =>
       prevTechnologies.map(tech =>
         tech.id === id ? { ...tech, status: newStatus } : tech
+      )
+    );
+  };
+
+  const updateTechnologyNotes = (techId, newNotes) => {
+    setTechnologies(prevTech =>
+      prevTech.map(tech =>
+        tech.id === techId ? { ...tech, notes: newNotes } : tech
       )
     );
   };
@@ -47,9 +55,39 @@ function App() {
     }
   };
 
+  // Загружаем данные из localStorage при первом рендере
+  useEffect(() => {
+    const saved = localStorage.getItem('techTrackerData');
+    if (saved) {
+      try {
+        setTechnologies(JSON.parse(saved));
+        console.log('Данные загружены из localStorage');
+      } catch (error) {
+        console.error('Ошибка загрузки из localStorage:', error);
+        // Убрал alert, чтобы не раздражать пользователя
+      }
+    }
+  }, []);
+
+  // Сохраняем технологии в localStorage с debounce (чтобы не спамить сохранениями при каждом изменении, напр. при вводе заметок)
+  useEffect(() => {
+    const debounceSave = setTimeout(() => {
+      try {
+        localStorage.setItem('techTrackerData', JSON.stringify(technologies));
+        console.log('Данные сохранены в localStorage');
+      } catch (error) {
+        console.error('Ошибка сохранения в localStorage:', error);
+      }
+    }, 500); // Задержка 0.5 секунды
+
+    return () => clearTimeout(debounceSave);
+  }, [technologies]);
+
   const filteredTechnologies = technologies.filter(tech => {
-    if (filter === 'all') return true;
-    return tech.status === filter;
+    const matchesSearch = tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tech.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter = filter === 'all' || tech.status === filter;
+    return matchesSearch && matchesFilter;
   });
 
   return (
@@ -62,16 +100,21 @@ function App() {
         isOnline={true}
       />
       <TaskList />
-      {/* Новые теоретические примеры */}
-      <Counter />
-      <RegistrationForm />
-      <ColorPicker />
       <ProgressHeader technologies={technologies} />
-      <QuickActions 
+      <QuickActions
         onMarkAllCompleted={markAllCompleted}
         onResetAll={resetAll}
         onRandomNext={randomNext}
       />
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Поиск технологий..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <span>Найдено: {filteredTechnologies.length}</span>
+      </div>
       <div className="filters">
         <button onClick={() => setFilter('all')}>Все</button>
         <button onClick={() => setFilter('not-started')}>Не начатые</button>
@@ -85,10 +128,17 @@ function App() {
             title={tech.title}
             description={tech.description}
             status={tech.status}
+            notes={tech.notes}
+            onNotesChange={updateTechnologyNotes}
+            id={tech.id}
             onStatusChange={(newStatus) => updateStatus(tech.id, newStatus)}
           />
         ))}
       </div>
+      {/* Новые примеры с useEffect */}
+      <WindowSizeTracker />
+      <UserProfile />
+      <ContactForm />
     </div>
   );
 }

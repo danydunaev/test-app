@@ -1,6 +1,7 @@
 import './TechnologyCard.css';
+import TechnologyNotes from './TechnologyNotes';
 
-function TechnologyCard({ title, description, status, onStatusChange }) {
+function TechnologyCard({ title, description, status, onStatusChange, notes, onNotesChange, id }) {
   const handleClick = () => {
     let newStatus;
     if (status === 'not-started') {
@@ -29,6 +30,7 @@ function TechnologyCard({ title, description, status, onStatusChange }) {
       <h3>{title}</h3>
       <p>{description}</p>
       <p className="status">{statusIndicator}</p>
+      <TechnologyNotes notes={notes} onNotesChange={onNotesChange} techId={id} />
     </div>
   );
 }
