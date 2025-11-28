@@ -1,0 +1,472 @@
+@import './cssVariables.css';
+
+/* DataImportExport.css */
+
+.import-export-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 64px);
+  animation: fadeIn 0.5s ease-in;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.import-export-container h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0 0 2rem 0;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Сообщения статуса */
+.status-message {
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+  text-align: center;
+  border: 1px solid;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-success {
+  background-color: var(--color-success-bg);
+  border-left: 4px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.status-error {
+  background-color: var(--color-error-bg);
+  border-left: 4px solid var(--color-error);
+  color: var(--color-error);
+}
+
+.status-info {
+  background-color: var(--color-info-bg);
+  border-left: 4px solid var(--color-info);
+  color: var(--color-info);
+}
+
+/* Секция управления */
+.controls-section {
+  background: var(--color-bg-secondary);
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-md);
+}
+
+.controls-section h2 {
+  margin-top: 0;
+  color: var(--color-text-primary);
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.btn-action {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-add {
+  background-color: var(--color-info);
+  color: white;
+}
+
+.btn-add:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-export {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.btn-export:hover:not(:disabled) {
+  background-color: var(--color-success);
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-import {
+  background-color: var(--color-warning);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-import:hover {
+  background-color: var(--color-warning);
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-delete {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background-color: var(--color-error);
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+/* Секция технологий */
+.technologies-section {
+  background: var(--color-bg-secondary);
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-md);
+}
+
+.technologies-section h2 {
+  margin-top: 0;
+  color: var(--color-text-primary);
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.empty-state-large {
+  text-align: center;
+  padding: 60px 40px;
+  color: var(--color-text-secondary);
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-title {
+  font-size: 24px;
+  color: var(--color-text-primary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.empty-hint {
+  font-size: 16px;
+  margin-top: 8px;
+  color: var(--color-text-secondary);
+}
+
+.technologies-grid-large {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.tech-item-large {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  padding: 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  animation: cardSlideIn 0.4s ease-out;
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tech-item-large:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.tech-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tech-title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.tech-category {
+  margin: 4px 0 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.status-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.status-button.status-not-started {
+  background-color: var(--color-warning);
+  color: white;
+}
+
+.status-button.status-not-started:hover {
+  background-color: var(--color-warning);
+  opacity: 0.8;
+}
+
+.status-button.status-in-progress {
+  background-color: var(--color-info);
+  color: white;
+}
+
+.status-button.status-in-progress:hover {
+  background-color: var(--color-info);
+  opacity: 0.8;
+}
+
+.status-button.status-completed {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.status-button.status-completed:hover {
+  background-color: var(--color-success);
+  opacity: 0.8;
+}
+
+.tech-description {
+  margin: 12px 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tech-meta-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.meta-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* Статистика */
+.statistics-section {
+  background: var(--color-bg-secondary);
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-md);
+}
+
+.statistics-section h2 {
+  margin-top: 0;
+  color: var(--color-text-primary);
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+}
+
+.stat-icon {
+  font-size: 36px;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stat-name {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 4px 0 0 0;
+}
+
+.stat-total {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+}
+
+.stat-not-started {
+  background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning) 100%);
+}
+
+.stat-in-progress {
+  background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info) 100%);
+}
+
+.stat-completed {
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success) 100%);
+}
+
+/* Информация */
+.info-section {
+  background: var(--color-bg-secondary);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.info-section h2 {
+  margin-top: 0;
+  color: var(--color-text-primary);
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-card {
+  padding: 20px;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.info-card h3 {
+  margin: 0 0 12px 0;
+  color: var(--color-text-primary);
+  font-size: 16px;
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+  .import-export-container {
+    padding: 20px 10px;
+  }
+
+  .import-export-container h1 {
+    font-size: 26px;
+  }
+
+  .controls-section,
+  .technologies-section,
+  .statistics-section,
+  .info-section {
+    padding: 20px;
+  }
+
+  .button-group {
+    grid-template-columns: 1fr;
+  }
+
+  .technologies-grid-large {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-item-header {
+    flex-direction: column;
+  }
+
+  .status-button {
+    width: 100%;
+  }
+}

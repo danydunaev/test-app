@@ -1,145 +1,132 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { lightTheme, darkTheme } from './styles/theme';
+import MuiNavigation from './components/MuiNavigation';
+import Home from './pages/Home';
+import About from './pages/About';
+import TechnologyList from './pages/TechnologyList';
+import TechnologyDetail from './pages/TechnologyDetail';
+import AddTechnology from './pages/AddTechnology';
+import Statistics from './pages/Statistics';
+import Settings from './pages/Settings';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import ApiDemo from './pages/ApiDemo';
+import WorkingAccessibleForm from './pages/WorkingAccessibleForm';
+import DataImportExport from './pages/DataImportExport';
+import MuiApp from './pages/MuiApp';
+import TechnologyManager from './components/TechnologyManager';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
-import Greeting from './Greeting';
-import UserCard from './UseCard'; // Исправил возможный тайпо в импорте (было './UseCard', предполагаю, что файл UserCard.jsx)
-import TaskList from './TaskList';
-import TechnologyCard from './components/TechnologyCard';
-import ProgressHeader from './components/ProgressHeader';
-import QuickActions from './components/QuickActions';
-// Новые примеры с useEffect
-import WindowSizeTracker from './components/WindowSizeTracker';
-import UserProfile from './components/UserProfile';
-import ContactForm from './components/ContactForm';
 
 function App() {
-  const [technologies, setTechnologies] = useState([
-    { id: 1, title: 'React Components', description: 'Изучение базовых компонентов', status: 'not-started', notes: '' },
-    { id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX', status: 'not-started', notes: '' },
-    { id: 3, title: 'State Management', description: 'Работа с состоянием компонентов', status: 'not-started', notes: '' }
-  ]);
-  const [filter, setFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('theme-mode') === 'dark';
+  });
 
-  const updateStatus = (id, newStatus) => {
-    setTechnologies(prevTechnologies =>
-      prevTechnologies.map(tech =>
-        tech.id === id ? { ...tech, status: newStatus } : tech
-      )
-    );
-  };
-
-  const updateTechnologyNotes = (techId, newNotes) => {
-    setTechnologies(prevTech =>
-      prevTech.map(tech =>
-        tech.id === techId ? { ...tech, notes: newNotes } : tech
-      )
-    );
-  };
-
-  const markAllCompleted = () => {
-    setTechnologies(prev => prev.map(tech => ({ ...tech, status: 'completed' })));
-  };
-
-  const resetAll = () => {
-    setTechnologies(prev => prev.map(tech => ({ ...tech, status: 'not-started' })));
-  };
-
-  const randomNext = () => {
-    const notStarted = technologies.filter(tech => tech.status === 'not-started');
-    if (notStarted.length > 0) {
-      const randomTech = notStarted[Math.floor(Math.random() * notStarted.length)];
-      updateStatus(randomTech.id, 'in-progress');
-      alert(`Следующая технология: ${randomTech.title}`);
-    } else {
-      alert('Все технологии уже начаты или завершены!');
-    }
-  };
-
-  // Загружаем данные из localStorage при первом рендере
   useEffect(() => {
-    const saved = localStorage.getItem('techTrackerData');
-    if (saved) {
-      try {
-        setTechnologies(JSON.parse(saved));
-        console.log('Данные загружены из localStorage');
-      } catch (error) {
-        console.error('Ошибка загрузки из localStorage:', error);
-        // Убрал alert, чтобы не раздражать пользователя
-      }
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const user = localStorage.getItem('username') || '';
+    setIsLoggedIn(loggedIn);
+    setUsername(user);
+    
+    // Инициализируем data-theme при загрузке
+    const isDark = localStorage.getItem('theme-mode') === 'dark';
+    const htmlElement = document.documentElement;
+    
+    if (isDark) {
+      htmlElement.setAttribute('data-theme', 'dark');
+      htmlElement.style.colorScheme = 'dark';
+    } else {
+      htmlElement.setAttribute('data-theme', 'light');
+      htmlElement.style.colorScheme = 'light';
     }
   }, []);
 
-  // Сохраняем технологии в localStorage с debounce (чтобы не спамить сохранениями при каждом изменении, напр. при вводе заметок)
   useEffect(() => {
-    const debounceSave = setTimeout(() => {
-      try {
-        localStorage.setItem('techTrackerData', JSON.stringify(technologies));
-        console.log('Данные сохранены в localStorage');
-      } catch (error) {
-        console.error('Ошибка сохранения в localStorage:', error);
-      }
-    }, 500); // Задержка 0.5 секунды
+    localStorage.setItem('theme-mode', isDarkMode ? 'dark' : 'light');
+    // Устанавливаем data-theme атрибут на html для CSS переменных
+    const htmlElement = document.documentElement;
+    
+    if (isDarkMode) {
+      htmlElement.setAttribute('data-theme', 'dark');
+      htmlElement.style.colorScheme = 'dark';
+    } else {
+      htmlElement.setAttribute('data-theme', 'light');
+      htmlElement.style.colorScheme = 'light';
+    }
+  }, [isDarkMode]);
 
-    return () => clearTimeout(debounceSave);
-  }, [technologies]);
+  const handleLogin = (user) => {
+    setIsLoggedIn(true);
+    setUsername(user);
+  };
 
-  const filteredTechnologies = technologies.filter(tech => {
-    const matchesSearch = tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tech.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = filter === 'all' || tech.status === filter;
-    return matchesSearch && matchesFilter;
-  });
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    setIsLoggedIn(false);
+    setUsername('');
+  };
+
+  const handleToggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  const theme = isDarkMode ? darkTheme : lightTheme;
 
   return (
-    <div className="App">
-      <Greeting />
-      <UserCard
-        name="Иван Иванов"
-        role="Администратор"
-        avatarUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfVMhpKmVy_-iwfRLAiNiaDslMa-2oEz7KTw&s"
-        isOnline={true}
-      />
-      <TaskList />
-      <ProgressHeader technologies={technologies} />
-      <QuickActions
-        onMarkAllCompleted={markAllCompleted}
-        onResetAll={resetAll}
-        onRandomNext={randomNext}
-      />
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Поиск технологий..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <span>Найдено: {filteredTechnologies.length}</span>
-      </div>
-      <div className="filters">
-        <button onClick={() => setFilter('all')}>Все</button>
-        <button onClick={() => setFilter('not-started')}>Не начатые</button>
-        <button onClick={() => setFilter('in-progress')}>В процессе</button>
-        <button onClick={() => setFilter('completed')}>Выполненные</button>
-      </div>
-      <div className="technologies-list">
-        {filteredTechnologies.map(tech => (
-          <TechnologyCard
-            key={tech.id}
-            title={tech.title}
-            description={tech.description}
-            status={tech.status}
-            notes={tech.notes}
-            onNotesChange={updateTechnologyNotes}
-            id={tech.id}
-            onStatusChange={(newStatus) => updateStatus(tech.id, newStatus)}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          minHeight: '100vh',
+          backgroundColor: 'background.default'
+        }}>
+          <MuiNavigation 
+            isLoggedIn={isLoggedIn} 
+            username={username} 
+            onLogout={handleLogout}
+            isDarkMode={isDarkMode}
+            onToggleTheme={handleToggleTheme}
           />
-        ))}
-      </div>
-      {/* Новые примеры с useEffect */}
-      <WindowSizeTracker />
-      <UserProfile />
-      <ContactForm />
-    </div>
+
+          <Box component="main" sx={{ flex: 1, backgroundColor: 'background.default' }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/technologies" element={<TechnologyList />} />
+              <Route path="/technology/:techId" element={<TechnologyDetail />} />
+              <Route path="/add-technology" element={<AddTechnology />} />
+              <Route path="/statistics" element={<Statistics />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/api-demo" element={<ApiDemo />} />
+              <Route path="/tech-manager" element={<TechnologyManager />} />
+              <Route path="/accessibility" element={<WorkingAccessibleForm />} />
+              <Route path="/import-export" element={<DataImportExport />} />
+              <Route path="/mui-app" element={<MuiApp />} />
+              <Route 
+                path="/login" 
+                element={<Login onLogin={handleLogin} />} 
+              />
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Dashboard username={username} />
+                  </ProtectedRoute>
+                } 
+              />
+            </Routes>
+          </Box>
+        </Box>
+      </Router>
+    </ThemeProvider>
   );
 }
 

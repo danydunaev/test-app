@@ -1,0 +1,183 @@
+@import './styles/cssVariables.css';
+
+.roadmap-importer {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-md);
+  color: var(--color-text-primary);
+}
+
+.importer-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.importer-header h3 {
+  margin: 0 0 12px 0;
+  color: var(--color-text-primary);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.importer-header p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.message {
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+  border-left: 4px solid;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.message-error {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.section-label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.import-section {
+  margin-bottom: 20px;
+}
+
+.import-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.import-button {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.import-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.import-button:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.import-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.delete-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+}
+
+.delete-all-button {
+  background: linear-gradient(135deg, var(--color-error) 0%, var(--color-error-bg) 100%);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+}
+
+.delete-all-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.delete-all-button:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.delete-all-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tech-count {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  padding: 8px 12px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: 6px;
+  margin-left: auto;
+}
+
+@media (max-width: 600px) {
+  .roadmap-importer {
+    padding: 16px;
+  }
+
+  .import-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .import-button {
+    width: 100%;
+  }
+
+  .delete-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .delete-all-button {
+    width: 100%;
+  }
+
+  .tech-count {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}

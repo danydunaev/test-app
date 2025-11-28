@@ -1,0 +1,152 @@
+/* CSS Variables for Theme System */
+/* Centralized color palette matching MUI theme */
+
+:root {
+  /* Light Mode Colors (Default) */
+  --color-primary: #2563EB;
+  --color-primary-light: #DBEAFE;
+  --color-primary-dark: #1E40AF;
+  
+  --color-secondary: #64748B;
+  --color-secondary-light: #CBD5E1;
+  --color-secondary-dark: #334155;
+  
+  --color-text-primary: #1E293B;
+  --color-text-secondary: #64748B;
+  --color-text-tertiary: #94A3B8;
+  
+  --color-bg-primary: #F8FAFC;
+  --color-bg-secondary: #FFFFFF;
+  --color-bg-tertiary: #F1F5F9;
+  
+  --color-border: #E2E8F0;
+  --color-border-dark: #CBD5E1;
+  
+  --color-success: #10B981;
+  --color-success-bg: #ECFDF5;
+  --color-warning: #F59E0B;
+  --color-warning-bg: #FFFBEB;
+  --color-error: #EF4444;
+  --color-error-bg: #FEE2E2;
+  --color-info: #3B82F6;
+  --color-info-bg: #EFF6FF;
+  
+  /* Input styles */
+  --color-input-bg: #FFFFFF;
+  --color-input-text: #1E293B;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: all 0.15s ease-in-out;
+  --transition-base: all 0.3s ease-in-out;
+  --transition-slow: all 0.5s ease-in-out;
+}
+
+/* Dark Mode - via data-theme attribute */
+[data-theme="dark"] {
+  --color-primary: #3B82F6;
+  --color-primary-light: #1E3A8A;
+  --color-primary-dark: #93C5FD;
+  
+  --color-secondary: #94A3B8;
+  --color-secondary-light: #1E293B;
+  --color-secondary-dark: #F1F5F9;
+  
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #CBD5E1;
+  --color-text-tertiary: #94A3B8;
+  
+  --color-bg-primary: #0F172A;
+  --color-bg-secondary: #1E293B;
+  --color-bg-tertiary: #334155;
+  
+  --color-border: #334155;
+  --color-border-dark: #475569;
+  
+  --color-success: #34D399;
+  --color-success-bg: #064E3B;
+  --color-warning: #FBBF24;
+  --color-warning-bg: #78350F;
+  --color-error: #F87171;
+  --color-error-bg: #7F1D1D;
+  --color-info: #60A5FA;
+  --color-info-bg: #0C4A6E;
+  
+  /* Input styles for dark mode */
+  --color-input-bg: #0F172A;
+  --color-input-text: #F1F5F9;
+  
+  /* Shadows adjusted for dark mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Support for prefers-color-scheme media query as fallback */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-primary: #3B82F6;
+    --color-primary-light: #1E3A8A;
+    --color-primary-dark: #93C5FD;
+    
+    --color-secondary: #94A3B8;
+    --color-secondary-light: #1E293B;
+    --color-secondary-dark: #F1F5F9;
+    
+    --color-text-primary: #F1F5F9;
+    --color-text-secondary: #CBD5E1;
+    --color-text-tertiary: #94A3B8;
+    
+    --color-bg-primary: #0F172A;
+    --color-bg-secondary: #1E293B;
+    --color-bg-tertiary: #334155;
+    
+    --color-border: #334155;
+    --color-border-dark: #475569;
+    
+    --color-success: #34D399;
+    --color-success-bg: #064E3B;
+    --color-warning: #FBBF24;
+    --color-warning-bg: #78350F;
+    --color-error: #F87171;
+    --color-error-bg: #7F1D1D;
+    --color-info: #60A5FA;
+    --color-info-bg: #0C4A6E;
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Apply theme variables to body */
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: var(--transition-base);
+}
+
+/* Ensure paragraph text is always readable */
+p {
+  color: var(--color-text-primary);
+}

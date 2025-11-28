@@ -1,0 +1,306 @@
+@import './cssVariables.css';
+
+/* WorkingAccessibleForm.css */
+
+.accessible-form-container {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accessible-form-wrapper {
+  max-width: 600px;
+  width: 100%;
+  background: var(--color-bg-secondary);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.accessible-form-wrapper h1 {
+  margin: 0 0 10px 0;
+  color: var(--color-text-primary);
+  font-size: 28px;
+}
+
+.form-description {
+  margin: 0 0 30px 0;
+  color: var(--color-text-secondary);
+  font-size: 16px;
+}
+
+/* Скрытый класс для скринридеров */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.accessible-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 28px;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--color-error);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  background-color: var(--color-input-bg);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.form-input.input-error,
+.form-textarea.input-error {
+  border-color: var(--color-error);
+  background-color: var(--color-error-bg);
+}
+
+.form-input.input-error:focus,
+.form-textarea.input-error:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+  display: block;
+  color: var(--color-error);
+  font-size: 13px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  background-color: var(--color-error-bg);
+  border-left: 3px solid var(--color-error);
+  border-radius: 3px;
+  animation: shake 0.3s ease-in;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.help-text {
+  display: block;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.form-status {
+  padding: 14px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-success {
+  background-color: var(--color-success-bg);
+  border-left: 4px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.status-error {
+  background-color: var(--color-error-bg);
+  border-left: 4px solid var(--color-error);
+  color: var(--color-error);
+}
+
+.btn-submit {
+  padding: 14px 24px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.btn-submit:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3);
+}
+
+/* Информация о доступности */
+.accessibility-info {
+  background-color: var(--color-bg-tertiary);
+  padding: 24px;
+  border-radius: 6px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.accessibility-info h2 {
+  margin-top: 0;
+  color: var(--color-text-primary);
+  font-size: 18px;
+}
+
+.accessibility-info ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.accessibility-info li {
+  margin-bottom: 8px;
+}
+
+.accessibility-info li::marker {
+  color: var(--color-primary);
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+  .accessible-form-container {
+    padding: 20px 10px;
+  }
+
+  .accessible-form-wrapper {
+    padding: 24px;
+  }
+
+  .accessible-form-wrapper h1 {
+    font-size: 24px;
+  }
+
+  .form-description {
+    font-size: 14px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 16px; /* Предотвращает зум на iOS */
+  }
+
+  .accessibility-info {
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  .accessibility-info h2 {
+    font-size: 16px;
+  }
+
+  .accessibility-info ul {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+/* Высокий контраст */
+@media (prefers-contrast: more) {
+  .form-input,
+  .form-textarea {
+    border-width: 3px;
+  }
+
+  .form-label {
+    font-weight: 700;
+  }
+
+  .btn-submit {
+    font-weight: 700;
+    border: 2px solid white;
+  }
+}
+
+/* Предпочтение уменьшенного движения */
+@media (prefers-reduced-motion: reduce) {
+  .accessible-form-wrapper,
+  .error-message,
+  .form-status,
+  .btn-submit {
+    animation: none;
+  }
+
+  .accessible-form-wrapper,
+  .form-input,
+  .form-textarea,
+  .btn-submit {
+    transition: none;
+  }
+}
